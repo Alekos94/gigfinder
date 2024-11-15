@@ -37,6 +37,7 @@ export function FavouritesProvider ({ children }) {
   //delete from favourites
   const deleteFromFavourites = async(eventId) => {
     try {
+      // ? Remove this log and all other logs during TS refactor?
       console.log(eventId);
       await fetch(`http://localhost:3001/api/favourites/${eventId}`, {method: 'DELETE'});
       setFavourites(favourites.filter((favourite) => favourite.eventId !== eventId));

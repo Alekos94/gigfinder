@@ -1,3 +1,4 @@
+// ? Seems to be some more redundant imports here?
 import React, { useContext, useEffect, useState } from "react";
 import './events-list-page.css';
 import { LocationContext } from "../../context/location-context";
@@ -18,7 +19,8 @@ function EventsListPage() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const { location } = useContext(LocationContext);
-  const [searchRadius, setSearchRadius] = useState(20); // could use later to alter search radius 
+  // ? Would be nice to add a way to alter this search radius optionallly?
+  const [searchRadius, setSearchRadius] = useState(20); // could use later to alter search radius
   const color = "#b800a6"
 
   //fetch events from backend
@@ -28,9 +30,9 @@ function EventsListPage() {
         setLoading(true);
         const response = await fetch(`http://localhost:3001/api/events?lat=${location.latitude}&long=${location.longitude}`);
         const data = await response.json();
-        console.log(data);
+        console.log(data); // ? Potentially another log to remove during refactor/cleanup?
         setEvents(data.futureEvents);
-        
+
       } catch (error) {
         console.error('error fetching events:  ', error);
       } finally {
@@ -55,7 +57,7 @@ function EventsListPage() {
           data-testid="loader" />
       ) : (
         <div>
-          <div className="upcoming-events"> 
+          <div className="upcoming-events">
             <h2>UPCOMING EVENTS NEAR YOU</h2>
             <EventList events={events}/>
           </div>

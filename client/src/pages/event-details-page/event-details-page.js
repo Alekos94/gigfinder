@@ -1,3 +1,4 @@
+// ? Another redundant useEffect hook import?
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import './event-details-page.css';
@@ -6,9 +7,10 @@ import { generateICSFile } from "../../utils/calendar";
 import EventDetailsMap from "../../components/event-details-map/event-details-map";
 
 function EventDetailsPage() {
+  // ? Little bit confused with how these next two lines work and the structure of data, may need to review React docs on this?
   const location = useLocation();
   const { event } = location.state;
-  
+
   if (!event) return <p>Event details not available.</p>;
 
   return (

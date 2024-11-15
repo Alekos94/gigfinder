@@ -1,9 +1,10 @@
 const Favourite = require('../models/favourite')
 require('dotenv').config();
 
-
+// ? Can we modularize these controllers into their own respective files? For example, eventsControllers and favouriteControllers etc?
+// ? Seems to be a few redundant logs in this file?
 const controllers = {
-  
+
   // event controller
   // handle ticketmaster api and format event data
   getEvents: async function(req, res) {
@@ -14,10 +15,10 @@ const controllers = {
 
       const response = await fetch(url);
       if(!response.ok) return res.status(400).send('Failed to fetch events')
-      
+
       const data = await response.json();
-      
-      // if no events, set to empty array 
+
+      // if no events, set to empty array
       const events = data._embedded ? data._embedded.events : [];
 
       // for some reason the API returned some past events so these are filtred out here
@@ -32,7 +33,7 @@ const controllers = {
       console.error('error fetching events:  ', error);
     }
   },
-  
+
   // favourite controller
   getFavourites: async function(req, res) {
     try {
@@ -68,7 +69,7 @@ const controllers = {
       res.status(500).json({message: 'Error removing Favourite:  ', error})
     }
   }
-  
+
   // review controller
   // handle add/remove reviews
 }

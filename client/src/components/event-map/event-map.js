@@ -3,13 +3,15 @@ import mapboxgl from 'mapbox-gl';
 import './event-map.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-mapboxgl.accessToken = 'pk.eyJ1Ijoic3RlZmFuYnV0bGVyIiwiYSI6ImNtMzdmcncwMjBmamIyanNlODYyNDkwY3EifQ.1CrUKQTuJH1TKJsw3yrf-w';
+mapboxgl.accessToken = 'pk.eyJ1IjoiZ2VvcmdlYnVydCIsImEiOiJjbTNoZ2N6ZDMwOWd5MmpzYWZmaTIycmxnIn0.ei_YZJP7OBCUfZb-n8NOyg';
 
+// ? Little bit confused with this component since I'm not familiar with MapBox, consult MapBox docs?
 function EventMap ({events, radius, location}) {
   const mapContainerRef = useRef(null);
 
   useEffect(() => {
-    
+
+    // ? Another log that can be potentially removed?
     console.log(`location = ${location.longitude}, ${location.latitude}`);
 
     if (!location || !location.latitude || !location.longitude) {

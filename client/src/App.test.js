@@ -1,3 +1,4 @@
+// ? Remove this redundant test file before we add our own tests?
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
