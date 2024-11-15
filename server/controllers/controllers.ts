@@ -9,7 +9,7 @@ const controllers = {
 
   // event controller
   // handle ticketmaster api and format event data
-  getEvents: async function(req: Request, res: Response) {
+  getEvents: async function(req: Request, res: Response): Promise<void | Response<any, Record<string, any>>>{
     try {
       const { lat, long }  = req.query; //impovement as this filter is deprecated and maybe removed in a future release - use geoPoint instead
       const apiKey  = process.env.TICKETMASTER_API_KEY;
