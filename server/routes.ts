@@ -1,6 +1,6 @@
-const express = require('express')
+import express from 'express';
+import controller from './controllers/controllers';
 const router = express.Router()
-const controller = require('./controllers/controllers');
 
 // /events
 router.get('/events', controller.getEvents)
@@ -13,4 +13,4 @@ router.delete('/favourites/:id', controller.deleteFromFavourites)
 
 // /reviews
 
-module.exports = router;
+export default router;
