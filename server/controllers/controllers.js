@@ -8,7 +8,7 @@ const controllers = {
   // handle ticketmaster api and format event data
   getEvents: async function(req, res) {
     try {
-      const { lat, long } = req.query;
+      const { lat, long } = req.query; //impovement as this filter is deprecated and maybe removed in a future release - use geoPoint instead
       const apiKey = process.env.TICKETMASTER_API_KEY;
       const url = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${apiKey}&latlong=${lat},${long}&radius=20&unit=miles&sort=date,asc&classificationName=Music`;
 
@@ -25,7 +25,7 @@ const controllers = {
       const futureEvents = events.filter(event => {
         const eventDate = new Date(event.dates.start.dateTime);
         return eventDate >= today;
-      })
+      }) //possibly making 
 
       res.status(200).json({ futureEvents });
     } catch (error) {
@@ -38,7 +38,7 @@ const controllers = {
     try {
       const favourites = await Favourite.find();
       res.status(200).json(favourites);
-      console.log('deleted')
+      console.log('deleted')// not sure its purpose maybe for debugging purposes - it can be misleading though 
     } catch (error) {
       console.error('Error fetching favourites from database:  ', error);
       res.status(500).json({message: 'Error getting favourites:  ', error})
