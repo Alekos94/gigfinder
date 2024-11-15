@@ -1,6 +1,7 @@
 import {Favourite, IFavourite} from '../models/favourite'
 import dotenv from 'dotenv'
 import { Request, Response } from 'express';
+import {event as IEvent} from '../@types/event';
 dotenv.config()
 // ? Can we modularize these controllers into their own respective files? For example, eventsControllers and favouriteControllers etc?
 // ? Seems to be a few redundant logs in this file?
@@ -9,30 +10,31 @@ const controllers = {
 
   // event controller
   // handle ticketmaster api and format event data
-  getEvents: async function(req: Request, res: Response) {
+  getEvents: async function(req: Request, res: Response): Promise<void> {
     try {
       const { lat, long }  = req.query; //impovement as this filter is deprecated and maybe removed in a future release - use geoPoint instead
       const apiKey  = process.env.TICKETMASTER_API_KEY;
       const url = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${apiKey}&latlong=${lat},${long}&radius=20&unit=miles&sort=date,asc&classificationName=Music`;
 
       const response = await fetch(url);
-      if(!response.ok) return res.status(400).send('Failed to fetch events')
+      if(!response.ok) res.status(400).send('Failed to fetch events')
 
-      const data = await response.json(); 
+      const data = await response.json();
 
       // if no events, set to empty array
       const events = data._embedded ? data._embedded.events : [];
 
       // for some reason the API returned some past events so these are filtred out here
       const today = new Date();
-      const futureEvents = events.filter(event => {
+      const futureEvents = events.filter((event: IEvent & {dates: any[]}) => {
         const eventDate = new Date(event.dates.start.dateTime);
         return eventDate >= today;
-      }) //possibly making 
+      }) //possibly making
 
       res.status(200).json({ futureEvents });
     } catch (error) {
       console.error('error fetching events:  ', error);
+      res.status(500)
     }
   },
 
