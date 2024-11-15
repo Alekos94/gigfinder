@@ -1,23 +1,26 @@
-const Favourite = require('../models/favourite')
-require('dotenv').config();
-
+import {Favourite, IFavourite} from '../models/favourite'
+import dotenv from 'dotenv'
+import { Request, Response } from 'express';
+dotenv.config()
+// ? Can we modularize these controllers into their own respective files? For example, eventsControllers and favouriteControllers etc?
+// ? Seems to be a few redundant logs in this file?
 
 const controllers = {
-  
+
   // event controller
   // handle ticketmaster api and format event data
-  getEvents: async function(req, res) {
+  getEvents: async function(req: Request, res: Response) {
     try {
-      const { lat, long } = req.query; //impovement as this filter is deprecated and maybe removed in a future release - use geoPoint instead
-      const apiKey = process.env.TICKETMASTER_API_KEY;
+      const { lat, long }  = req.query; //impovement as this filter is deprecated and maybe removed in a future release - use geoPoint instead
+      const apiKey  = process.env.TICKETMASTER_API_KEY;
       const url = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${apiKey}&latlong=${lat},${long}&radius=20&unit=miles&sort=date,asc&classificationName=Music`;
 
       const response = await fetch(url);
       if(!response.ok) return res.status(400).send('Failed to fetch events')
-      
-      const data = await response.json();
-      
-      // if no events, set to empty array 
+
+      const data = await response.json(); 
+
+      // if no events, set to empty array
       const events = data._embedded ? data._embedded.events : [];
 
       // for some reason the API returned some past events so these are filtred out here
@@ -32,24 +35,23 @@ const controllers = {
       console.error('error fetching events:  ', error);
     }
   },
-  
+
   // favourite controller
-  getFavourites: async function(req, res) {
+  getFavourites: async function(req: Request, res: Response): Promise<void> {
     try {
-      const favourites = await Favourite.find();
+      const favourites: IFavourite[] = await Favourite.find();
       res.status(200).json(favourites);
-      console.log('deleted')// not sure its purpose maybe for debugging purposes - it can be misleading though 
     } catch (error) {
       console.error('Error fetching favourites from database:  ', error);
       res.status(500).json({message: 'Error getting favourites:  ', error})
     }
   },
 
-  addToFavourites: async function(req, res) {
+  addToFavourites: async function(req: Request, res: Response): Promise<void>  {
     try {
-      const { eventId, eventDetails } = req.body;
-      const favourite = new Favourite({ eventId, eventDetails });
-      favourite.save();
+      const {eventId, eventDetails} : IFavourite = req.body; // need the eventDetails interface
+      const favourite= new Favourite({ eventId, eventDetails });
+      await favourite.save();
       res.status(201).json(favourite);
       console.log('message added')
     } catch (error) {
@@ -58,7 +60,7 @@ const controllers = {
     }
   },
 
-  deleteFromFavourites: async function(req, res) {
+  deleteFromFavourites: async function(req: Request, res: Response) {
     try {
       const { id } = req.params;
       await Favourite.deleteOne({ eventId: id});
@@ -68,9 +70,9 @@ const controllers = {
       res.status(500).json({message: 'Error removing Favourite:  ', error})
     }
   }
-  
+
   // review controller
   // handle add/remove reviews
 }
 
-module.exports = controllers;
+export default controllers;

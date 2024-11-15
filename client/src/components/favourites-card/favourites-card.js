@@ -10,11 +10,12 @@ function FavouritesCard( {event}) {
   useEffect(()=> {}, [favourites, event.eventDetails.id])
 
   function handleMoreInfo(event) {
+    // ? Another potential log to remove?
     console.log(event);
     navigate(`/event-details/`, { state : { event } })
   }
 
-  
+
   return (
     <div className="event-card">
     <img src={event.eventDetails.images[0].url} alt={event.name} className="event-image" />
