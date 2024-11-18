@@ -1,7 +1,9 @@
-import {Favourite, IFavourite} from '../models/favourite'
+import {Favourite} from '../models/favourite'
 import dotenv from 'dotenv'
 import { Request, Response } from 'express';
-import {event as IEvent} from '../@types/event';
+import {IEvent, IEventList, IFavourite} from '../@types/event';
+
+
 dotenv.config()
 // ? Can we modularize these controllers into their own respective files? For example, eventsControllers and favouriteControllers etc?
 // ? Seems to be a few redundant logs in this file?
@@ -10,7 +12,7 @@ const controllers = {
 
   // event controller
   // handle ticketmaster api and format event data
-  getEvents: async function(req: Request, res: Response): Promise<void | Response<any, Record<string, any>>>{
+  getEvents: async function(req: Request, res: Response): Promise<void>{
 
     try {
       const { lat, long }  = req.query; //impovement as this filter is deprecated and maybe removed in a future release - use geoPoint instead
@@ -20,14 +22,14 @@ const controllers = {
       const response = await fetch(url);
       if(!response.ok) res.status(400).send('Failed to fetch events')
 
-      const data = await response.json();
+      const data: IEventList = await response.json();
 
       // if no events, set to empty array
       const events = data._embedded ? data._embedded.events : [];
 
       // for some reason the API returned some past events so these are filtred out here
       const today = new Date();
-      const futureEvents = events.filter((event: IEvent & {dates: any[]}) => {
+      const futureEvents = events.filter((event: any) => {
         const eventDate = new Date(event.dates.start.dateTime);
         return eventDate >= today;
       }) //possibly making
@@ -52,7 +54,7 @@ const controllers = {
 
   addToFavourites: async function(req: Request, res: Response): Promise<void>  {
     try {
-      const {eventId, eventDetails} : IFavourite = req.body; // need the eventDetails interface
+      const {eventId, eventDetails} : IFavourite = req.body; 
       const favourite= new Favourite({ eventId, eventDetails });
       await favourite.save();
       res.status(201).json(favourite);

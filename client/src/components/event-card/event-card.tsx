@@ -3,13 +3,36 @@ import './event-card.css';
 import { FavouritesContext } from "../../context/favourites-context";
 import { useNavigate } from "react-router-dom";
 
-function EventCard( {event}) {
+
+interface EventImage {
+  url: string;
+}
+
+interface EventDates {
+  start: {
+    localDate: string;
+    localTime: string;
+  };
+}
+
+interface Event {
+  id: string;
+  name: string;
+  images: EventImage[];
+  dates: EventDates;
+  venue: string;
+}
+
+interface EventProps {
+  event: Event; 
+}
+
+function EventCard( {event} : EventProps) {
   const { favourites, addToFavourites, deleteFromFavourites } = useContext(FavouritesContext);
   const [isFavourite, setIsFavourite] = useState(false);
   const navigate = useNavigate();
 
   useEffect(()=> {
-    console.log(favourites)
     if (favourites.some(fav => fav.eventId === event.id)) setIsFavourite(true);
     else setIsFavourite(false);
   }, [favourites, event.id])
@@ -17,7 +40,7 @@ function EventCard( {event}) {
   function handleMoreInfo(event) {
     navigate(`/event-details/`, { state : { event } })
   }
-
+// {event.venue} venue property does not exist in initial api call - this should be deleted
   return (
     <div className="event-card">
     <img src={event.images[0].url} alt={event.name} className="event-image" />
@@ -25,7 +48,7 @@ function EventCard( {event}) {
       <h3 className="event-name">{event.name}</h3>
       <p className="event-date">{event.dates.start.localDate}</p>
       <p className="event-time">{event.dates.start.localTime}</p>
-      <p className="event-venue">{event.venue}</p>
+      <p className="event-venue">{event.venue}</p> 
       {isFavourite ? 
         <button className="remove-from-favourites" onClick={()=> deleteFromFavourites(event.id)}>Remove from Favourites</button>
         :

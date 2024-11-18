@@ -2,6 +2,13 @@ import React from "react";
 import EventCard from "../event-card/event-card";
 import './event-list.css';
 
+type eventListProps {
+  events: {
+    name: string
+    
+  }[]
+}
+
 export function EventList ({events}) {
 
   return (

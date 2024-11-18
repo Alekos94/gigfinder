@@ -1,8 +1,13 @@
 import React, { createContext, useEffect, useState } from 'react';
 
+type FavouriteContextProviderProps  = {
+    children: React.ReactNode
+}
+
+
 export const FavouritesContext = createContext();
 
-export function FavouritesProvider ({ children }) {
+export function FavouritesProvider ({ children }: FavouriteContextProviderProps) {
   const [favourites, setFavourites] = useState([]);
 
   //on load fetch favourites from backend

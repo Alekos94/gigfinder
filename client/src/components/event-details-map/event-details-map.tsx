@@ -6,8 +6,12 @@ import './event-details-map.css';
 // ? Should we ask to Stefan to use his MapBox access Token? And more importantly, secure it?
 mapboxgl.accessToken = 'pk.eyJ1IjoiZ2VvcmdlYnVydCIsImEiOiJjbTNoZ2N6ZDMwOWd5MmpzYWZmaTIycmxnIn0.ei_YZJP7OBCUfZb-n8NOyg';
 
-function EventDetailsMap({ longitude, latitude }) {
-  const mapContainerRef = useRef(null);
+type EventDetailProps = {
+  longitude: string
+  latitude: string
+}
+function EventDetailsMap({ longitude, latitude } : EventDetailProps) {  //
+  const mapContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!longitude || !latitude) {
@@ -17,7 +21,7 @@ function EventDetailsMap({ longitude, latitude }) {
 
     //inititalise the map
     const map = new mapboxgl.Map({
-      container: mapContainerRef.current,
+      container: mapContainerRef.current!,
       style: 'mapbox://styles/mapbox/dark-v11',
       center: [parseFloat(longitude), parseFloat(latitude)],
       zoom: 12
