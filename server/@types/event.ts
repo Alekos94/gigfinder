@@ -9,7 +9,7 @@ interface EventDate {
   }
 }
 
-interface EvenetVenue {
+interface EventVenue {
   name: string;
   address: {
     line1: string;
@@ -23,10 +23,11 @@ interface EvenetVenue {
 }
 
 export interface IEvent {
+  id: string;
   name : string;
   dates: EventDate;
   images: EventImages[];
-  _embedded: EvenetVenue[];
+  _embedded: EventVenue[];
   url: string;
 }
 
@@ -37,7 +38,7 @@ export interface IEventList {
 }
 
 export interface IFavourite {
-  eventId: string;
+  eventId: IEvent["id"];
   eventDetails: IEvent
 }
 

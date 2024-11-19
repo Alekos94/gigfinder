@@ -5,7 +5,7 @@ import './landing-page.css';
 
 function LandingPage() {
   const navigate = useNavigate();
-  const { setLocation } = useContext(LocationContext);
+  const {setLocation} = useContext(LocationContext);
 
   //handle 'find' button click 
   function handleFindEvents() {

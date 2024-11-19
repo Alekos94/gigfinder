@@ -4,30 +4,7 @@ import { FavouritesContext } from "../../context/favourites-context";
 import { useNavigate } from "react-router-dom";
 
 
-interface EventImage {
-  url: string;
-}
-
-interface EventDates {
-  start: {
-    localDate: string;
-    localTime: string;
-  };
-}
-
-interface Event {
-  id: string;
-  name: string;
-  images: EventImage[];
-  dates: EventDates;
-  venue: string;
-}
-
-interface EventProps {
-  event: Event; 
-}
-
-function EventCard( {event} : EventProps) {
+function EventCard( {event}) {
   const { favourites, addToFavourites, deleteFromFavourites } = useContext(FavouritesContext);
   const [isFavourite, setIsFavourite] = useState(false);
   const navigate = useNavigate();
@@ -48,7 +25,6 @@ function EventCard( {event} : EventProps) {
       <h3 className="event-name">{event.name}</h3>
       <p className="event-date">{event.dates.start.localDate}</p>
       <p className="event-time">{event.dates.start.localTime}</p>
-      <p className="event-venue">{event.venue}</p> 
       {isFavourite ? 
         <button className="remove-from-favourites" onClick={()=> deleteFromFavourites(event.id)}>Remove from Favourites</button>
         :

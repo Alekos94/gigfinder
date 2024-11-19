@@ -4,10 +4,9 @@ import './events-list-page.css';
 import { LocationContext } from "../../context/location-context";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import { EventList } from "../../components/event-list/event-list";
-import { FavouritesContext } from "../../context/favourites-context";
 import EventMap from "../../components/event-map/event-map";
-import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/navbar";
+import {IEvent} from "../../@types/event"
 
 const override = {
   display: "block",
@@ -15,8 +14,11 @@ const override = {
   borderColor: "#b800a6",
 };
 
+interface IFutureEvents {
+  futureEvents: IEvent[]
+}
 function EventsListPage() {
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState<IEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const { location } = useContext(LocationContext);
   // ? Would be nice to add a way to alter this search radius optionallly?
@@ -28,8 +30,8 @@ function EventsListPage() {
     const fetchEvents = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:3001/api/events?lat=${location.latitude}&long=${location.longitude}`);
-        const data = await response.json();
+        const response = await fetch(`http://localhost:3001/api/events?lat=${location?.latitude}&long=${location?.longitude}`);
+        const data: IFutureEvents = await response.json();
         console.log(data); // ? Potentially another log to remove during refactor/cleanup?
         setEvents(data.futureEvents);
 
@@ -39,7 +41,7 @@ function EventsListPage() {
         setLoading(false);
       }
     }
-    if (location.latitude && location.longitude) fetchEvents();
+    if (location?.latitude && location?.longitude) fetchEvents();
   }, [location]);
 
 
@@ -52,7 +54,7 @@ function EventsListPage() {
           color={color}
           loading={loading}
           cssOverride={override}
-          size={150}
+          // size={150}
           aria-label="Loading Spinner"
           data-testid="loader" />
       ) : (

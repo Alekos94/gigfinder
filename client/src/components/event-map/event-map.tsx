@@ -2,17 +2,24 @@ import React, { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import './event-map.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
-
+import {IEvent} from "../../@types/event"
+import { ILocation } from '../../context/location-context';
 mapboxgl.accessToken = 'pk.eyJ1IjoiZ2VvcmdlYnVydCIsImEiOiJjbTNoZ2N6ZDMwOWd5MmpzYWZmaTIycmxnIn0.ei_YZJP7OBCUfZb-n8NOyg';
 
+
+interface EventMapProps {
+ events:IEvent[];
+ radius: number;
+ location: ILocation | null;
+}
 // ? Little bit confused with this component since I'm not familiar with MapBox, consult MapBox docs?
-function EventMap ({events, radius, location}) {
+function EventMap ({events, radius, location} : EventMapProps) {
   const mapContainerRef = useRef(null);
 
   useEffect(() => {
 
     // ? Another log that can be potentially removed?
-    console.log(`location = ${location.longitude}, ${location.latitude}`);
+    console.log(`location = ${location?.longitude}, ${location?.latitude}`);
 
     if (!location || !location.latitude || !location.longitude) {
       console.error("location data error");
@@ -23,7 +30,7 @@ function EventMap ({events, radius, location}) {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/dark-v11',
-      center: [parseFloat(location.longitude), parseFloat(location.latitude)],
+      center: [location.longitude, location.latitude],
       zoom: 8,
       projection: { name: 'mercator' },
     });

@@ -1,11 +1,30 @@
 import React, { createContext, useEffect, useState } from "react";
 
-export const LocationContext = createContext();
+interface LocationContextProviderProps {
+  children: React.ReactNode
+}
 
-export function LocationProvider({children}) {
+export interface ILocation {
+  longitude: number;
+  latitude: number;
+}
+
+interface ILocationContext {
+  location: ILocation | null;
+  setLocation: React.Dispatch<React.SetStateAction<ILocation>>;
+}
+
+const iLocationContextState = {
+  location : null,
+  setLocation: () => {}
+}
+
+export const LocationContext = createContext <ILocationContext>(iLocationContextState);
+
+export function LocationProvider({children}: LocationContextProviderProps) {
  
   //if there is a saved location use it else set to null 
-  const [location, setLocation] = useState(() => {
+  const [location, setLocation] = useState<ILocation>(() => {
     const savedLocation = localStorage.getItem('location');
     return savedLocation ? JSON.parse(savedLocation) : {latitude: null, longitude: null};
   });

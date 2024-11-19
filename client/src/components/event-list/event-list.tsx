@@ -1,15 +1,11 @@
 import React from "react";
 import EventCard from "../event-card/event-card";
 import './event-list.css';
+import {IEvent} from "../../@types/event"
 
-type eventListProps {
-  events: {
-    name: string
-    
-  }[]
-}
 
-export function EventList ({events}) {
+
+export function EventList ({events} : { events: IEvent[] }) {
 
   return (
     <div className="events-list-container">

@@ -20,13 +20,20 @@ interface EvenetVenue {
   country: {
     name: string;
   };
+  location: {
+    longitude: string;
+    latitude: string;
+  }
 }
 
 export interface IEvent {
+  id: string;
   name : string;
   dates: EventDate;
   images: EventImages[];
-  _embedded: EvenetVenue[];
+  _embedded: {
+    venues: EvenetVenue[];
+  }
   url: string;
 }
 

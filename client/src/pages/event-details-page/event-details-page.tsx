@@ -1,15 +1,16 @@
 // ? Another redundant useEffect hook import?
-import React, { useEffect } from "react";
+import React from "react";
 import { useLocation } from "react-router-dom";
 import './event-details-page.css';
 import Navbar from "../../components/navbar/navbar";
 import { generateICSFile } from "../../utils/calendar";
 import EventDetailsMap from "../../components/event-details-map/event-details-map";
+import {IEvent} from "../../@types/event"
 
 function EventDetailsPage() {
   // ? Little bit confused with how these next two lines work and the structure of data, may need to review React docs on this?
   const location = useLocation();
-  const { event } = location.state;
+  const { event } = location.state as { event: IEvent };
 
   if (!event) return <p>Event details not available.</p>;
 
