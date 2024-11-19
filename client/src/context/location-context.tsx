@@ -5,8 +5,8 @@ interface LocationContextProviderProps {
 }
 
 export interface ILocation {
-  longitude: number;
-  latitude: number;
+  longitude: string;
+  latitude: string;
 }
 
 interface ILocationContext {

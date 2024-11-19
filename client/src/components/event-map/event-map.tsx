@@ -14,7 +14,7 @@ interface EventMapProps {
 }
 // ? Little bit confused with this component since I'm not familiar with MapBox, consult MapBox docs?
 function EventMap ({events, radius, location} : EventMapProps) {
-  const mapContainerRef = useRef(null);
+  const mapContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
 
@@ -28,9 +28,9 @@ function EventMap ({events, radius, location} : EventMapProps) {
 
     //initialise map
     const map = new mapboxgl.Map({
-      container: mapContainerRef.current,
+      container: mapContainerRef.current!,
       style: 'mapbox://styles/mapbox/dark-v11',
-      center: [location.longitude, location.latitude],
+      center: [parseFloat(location.longitude), parseFloat(location.latitude)],
       zoom: 8,
       projection: { name: 'mercator' },
     });

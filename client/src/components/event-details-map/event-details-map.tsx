@@ -21,12 +21,12 @@ function EventDetailsMap({ longitude, latitude } : ILocation) {  //
     const map = new mapboxgl.Map({
       container: mapContainerRef.current!,
       style: 'mapbox://styles/mapbox/dark-v11',
-      center: [longitude, latitude],
+      center: [parseFloat(longitude), parseFloat(latitude)],
       zoom: 12
     });
 
     //add marker to the map with event location
-    new mapboxgl.Marker().setLngLat([longitude, latitude]).addTo(map);
+    new mapboxgl.Marker().setLngLat([parseFloat(longitude), parseFloat(latitude)]).addTo(map);
 
     //cleanup on unmount
     return () => map.remove();

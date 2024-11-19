@@ -1,12 +1,13 @@
 import ical from 'ical-generator';
+import { IEvent } from '../@types/event';
 
-export function generateICSFile(event) {
+export function generateICSFile(event : IEvent) {
   const calendar = ical({ name: 'GigFinder Events' });
   calendar.createEvent({
     start: new Date(event.dates.start.dateTime),
-    duration: { hours: 2 }, 
+    // duration: { hours: 2 }, 
     summary: event.name,
-    description: event.description || 'Event at GigFinder',
+    description: 'Event at GigFinder', // event.description
     location: `${event._embedded.venues[0].address.line1}, ${event._embedded.venues[0].city.name}, ${event._embedded.venues[0].country.name}`,
     url: event.url,
   });

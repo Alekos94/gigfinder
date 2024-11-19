@@ -1,15 +1,17 @@
 import React, { useContext } from "react";
-import '../events-list-page/events-list-page.css';
-import { FavouritesContext } from "../../context/favourites-context";
 import Navbar from "../../components/navbar/navbar";
-// ? Redundant import?
-// import EventMap from "../../components/event-map/event-map";
+import { FavouritesContext } from "../../context/favourites-context";
 import { FavouritesList } from "../../components/favourites-list/favourites-list";
+import '../events-list-page/events-list-page.css';
 
 function FavouritesPage() {
-  const { favourites  } = useContext(FavouritesContext)
+  const context = useContext(FavouritesContext);
 
+  if (!context) {
+    return null;
+  }
 
+  const { favourites } = context;
 
   return (
     <div className="page">

@@ -15,7 +15,7 @@ function LandingPage() {
         const { longitude, latitude } = position.coords;
 
         //set location context
-        setLocation({ longitude, latitude })
+        setLocation({latitude: String(latitude), longitude: String(longitude)})
         
         //navigate to the events page 
         navigate(`/events`);

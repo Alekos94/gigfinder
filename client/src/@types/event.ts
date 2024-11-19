@@ -6,10 +6,11 @@ interface EventDate {
   start: {
     localDate: string;
     localTime: string;
+    dateTime: string;
   }
 }
 
-interface EvenetVenue {
+interface EventVenue {
   name: string;
   address: {
     line1: string;
@@ -32,8 +33,8 @@ export interface IEvent {
   dates: EventDate;
   images: EventImages[];
   _embedded: {
-    venues: EvenetVenue[];
-  }
+    venues: EventVenue[];
+  };
   url: string;
 }
 
