@@ -1,14 +1,16 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, ReactNode, useEffect, useState } from 'react';
+import { IFavourite, IEvent } from '../@types/event';
 
-type FavouriteContextProviderProps  = {
-    children: React.ReactNode
+export interface FavouritesContextType {
+  favourites: IFavourite[];
+  addToFavourites: (event: IEvent) => Promise<void>;
+  deleteFromFavourites: (eventId: string) => Promise<void>
 }
 
+export const FavouritesContext = createContext<FavouritesContextType | null>(null);
 
-export const FavouritesContext = createContext();
-
-export function FavouritesProvider ({ children }: FavouriteContextProviderProps) {
-  const [favourites, setFavourites] = useState([]);
+export function FavouritesProvider ({ children }: { children: ReactNode }) {
+  const [favourites, setFavourites] = useState<IFavourite[]>([]);
 
   //on load fetch favourites from backend
   useEffect(() => {
@@ -25,7 +27,7 @@ export function FavouritesProvider ({ children }: FavouriteContextProviderProps)
   }, [])
 
   //add favourites
-  const addToFavourites = async(event) => {
+  const addToFavourites = async(event: IFavourite['eventDetails']) => {
     try {
       const response = await fetch('http://localhost:3001/api/favourites', {
         method: 'POST',
@@ -40,10 +42,8 @@ export function FavouritesProvider ({ children }: FavouriteContextProviderProps)
   }
 
   //delete from favourites
-  const deleteFromFavourites = async(eventId) => {
+  const deleteFromFavourites = async(eventId: string) => {
     try {
-      // ? Remove this log and all other logs during TS refactor?
-      console.log(eventId);
       await fetch(`http://localhost:3001/api/favourites/${eventId}`, {method: 'DELETE'});
       setFavourites(favourites.filter((favourite) => favourite.eventId !== eventId));
 
