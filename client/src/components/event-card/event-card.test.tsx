@@ -146,4 +146,26 @@ describe('Event-card-tests', () => {
     expect(mockedNavigate).toHaveBeenCalledTimes(1)
     expect(mockedNavigate).toHaveBeenCalledWith(`/event-details/`, { state: { event: iEvent } })
   })
+
+  test('handler deleteFromFavourites is called', async () => {
+    const mockContextValue = {
+      favourites: [{ eventId: "1", eventDetails: iEvent},],
+      addToFavourites: jest.fn(),
+      deleteFromFavourites: jest.fn(),
+    };
+    
+    render(
+      <FavouritesContext.Provider value={mockContextValue}>
+        <MemoryRouter>
+          <EventCard event={iEvent} />
+        </MemoryRouter>
+      </FavouritesContext.Provider>);
+
+      const deleteButton = screen.getByRole('button', {name: 'Remove from Favourites'})
+
+      await user.click(deleteButton)
+
+      expect(mockContextValue.deleteFromFavourites).toHaveBeenCalledTimes(1)
+      expect(mockContextValue.deleteFromFavourites).toHaveBeenCalledWith(iEvent.id)
+  })
 })
