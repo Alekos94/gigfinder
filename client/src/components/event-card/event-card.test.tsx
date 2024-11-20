@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 import { FavouritesProvider } from "../../context/favourites-context";
 import { MemoryRouter } from "react-router-dom";
 import '@testing-library/jest-dom'
-import { FavouritesContext, FavouritesContextType } from "../../context/favourites-context";
+import { FavouritesContext} from "../../context/favourites-context";
 import user from '@testing-library/user-event';
 
 
