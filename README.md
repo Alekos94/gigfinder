@@ -15,5 +15,5 @@ Gigfinder grabs the users location, before displaying a list of upcoming music e
 
     `TICKETMASTER_API_KEY=<insert_your_key_here>`
 
-    `REACT_APP_MAPBOX_ACCESS_TOKEN=<insert_your_key_here>`
+    `REACT_APP_MAPBOX_ACCESS_TOKEN=<insert_your_key_here?`
 
