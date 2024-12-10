@@ -63,4 +63,5 @@ touch .env
 
 ## Contributors
 George Burt • [GitHub](https://github.com/georgeeburt) • [LinkedIn](https://www.linkedin.com/in/george-burt/)
+
 Alexandros Christodoulides • [GitHub](https://github.com/Alekos94) • [LinkedIn](https://www.linkedin.com/in/alexandros-christodoulides-227b6b149/)
