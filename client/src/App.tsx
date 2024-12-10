@@ -9,17 +9,16 @@ import './App.css';
 function App() {
   return (
     <Router>
-      <div className='app'>
+      <div className="app">
         <Routes>
-          <Route path='/' element={<LandingPage/>} />
-          <Route path='/events' element={<EventsListPage/>} />
-          <Route path='/favourites' element={<FavouritesPage/>} />
-          <Route path='event-details' element={<EventDetailsPage/>} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/events" element={<EventsListPage />} />
+          <Route path="/favourites" element={<FavouritesPage />} />
+          <Route path="event-details" element={<EventDetailsPage />} />
         </Routes>
       </div>
-
     </Router>
-  ) ;
+  );
 }
 
 export default App;

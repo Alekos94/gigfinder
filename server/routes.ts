@@ -1,16 +1,11 @@
 import express from 'express';
 import controller from './controllers/controllers';
-const router = express.Router()
+const router = express.Router();
 
-// /events
-router.get('/events', controller.getEvents)
+router.get('/events', controller.getEvents);
 
-
-// /favourites
-router.get('/favourites', controller.getFavourites)
-router.post('/favourites', controller.addToFavourites)
-router.delete('/favourites/:id', controller.deleteFromFavourites)
-
-// /reviews
+router.get('/favourites', controller.getFavourites);
+router.post('/favourites', controller.addToFavourites);
+router.delete('/favourites/:id', controller.deleteFromFavourites);
 
 export default router;

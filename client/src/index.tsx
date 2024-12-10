@@ -5,10 +5,10 @@ import App from './App';
 import { LocationProvider } from './context/location-context';
 import { FavouritesProvider } from './context/favourites-context';
 
-const container = document.getElementById('root')
+const container = document.getElementById('root');
 
 if (!container) {
-  throw new Error ('Root Element not found')  
+  throw new Error('Root Element not found');
 }
 
 const root = ReactDOM.createRoot(container);
@@ -17,10 +17,8 @@ root.render(
   <React.StrictMode>
     <LocationProvider>
       <FavouritesProvider>
-      <App />
+        <App />
       </FavouritesProvider>
     </LocationProvider>
   </React.StrictMode>
 );
-
-
