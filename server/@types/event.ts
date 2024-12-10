@@ -6,7 +6,7 @@ interface EventDate {
   start: {
     localDate: string;
     localTime: string;
-  }
+  };
 }
 
 interface EventVenue {
@@ -15,7 +15,7 @@ interface EventVenue {
     line1: string;
   };
   city: {
-    name:string;
+    name: string;
   };
   country: {
     name: string;
@@ -24,7 +24,7 @@ interface EventVenue {
 
 export interface IEvent {
   id: string;
-  name : string;
+  name: string;
   dates: EventDate;
   images: EventImages[];
   _embedded: EventVenue[];
@@ -33,12 +33,11 @@ export interface IEvent {
 
 export interface IEventList {
   _embedded: {
-    events: IEvent[]
-  }
+    events: IEvent[];
+  };
 }
 
 export interface IFavourite {
-  eventId: IEvent["id"];
-  eventDetails: IEvent
+  eventId: IEvent['id'];
+  eventDetails: IEvent;
 }
-

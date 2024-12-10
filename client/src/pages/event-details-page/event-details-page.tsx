@@ -8,7 +8,6 @@ import EventDetailsMap from "../../components/event-details-map/event-details-ma
 import {IEvent} from "../../@types/event"
 
 function EventDetailsPage() {
-  // ? Little bit confused with how these next two lines work and the structure of data, may need to review React docs on this?
   const location = useLocation();
   const { event } = location.state as { event: IEvent };
 
